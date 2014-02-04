@@ -1,6 +1,10 @@
-function ColorGraph(opts){
-  if (!(this instanceof ColorGraph)) return new ColorGraph(opts);
-  if (!opts) opts = {};
+var fs = require('fs')
+  , Canvas = require('canvas');
+
+"use strict";
+
+function ColorGraph(){
+  if (!(this instanceof ColorGraph)) return new ColorGraph();
 
   this.getGraph = function(canvas, trim, callback){
     var rawHisto = {},
@@ -45,5 +49,6 @@ function ColorGraph(opts){
     }
     callback(list);
   };
-
 }
+
+module.exports = new ColorGraph;

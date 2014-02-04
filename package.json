@@ -1,0 +1,12 @@
+{
+  "name": "colorGraph",
+  "version": "0.0.1",
+  "description": "Get color graph of canvas",
+  "main": "index.js",
+  "repository": "",
+  "dependencies": {
+    "canvas": "*"
+  },
+  "author": "",
+  "license": "BSD"
+}
