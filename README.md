@@ -1,0 +1,1 @@
+Takes a canvas, returns array of objects that contain the rgb values and the occurrences of that color within the canvas.
