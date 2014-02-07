@@ -1,5 +1,6 @@
 var fs = require('fs')
-  , Canvas = require('canvas');
+  , Canvas = require('canvas')
+  , converter = require('color-convert')();
 
 "use strict";
 
@@ -38,14 +39,14 @@ function ColorGraph(options){
   //@todo: implement feature to detect foreground/background based on number of points in a cluster being closest to middle of canvas
   this.getDominantColors = function(canvas, callback) {
     var points = this.getPoints(canvas),
-      clusters = this.kmeans(points, 3, 1),
+      clusters = this.kmeans(points, 5, 1),
       results = [];
 
     for (var i = 0; i < clusters.length; i++) {
       var p = [];
 
       if(options.mode === 'hsl') {
-        p = this.hslToRgb(clusters[i][0][0],clusters[i][0][1],clusters[i][0][2]);
+        p = converter.hsl(clusters[i][0][0],clusters[i][0][1],clusters[i][0][2]).rgb();
 
       } else {
         p[0] = parseInt(clusters[i][0][0],10);
@@ -70,7 +71,7 @@ function ColorGraph(options){
           d = [];
 
         if(options.mode === 'hsl') {
-          d = this.rgbToHsl(imgData.data[i],imgData.data[++i],imgData.data[++i]);
+          d = converter.rgb(imgData.data[i],imgData.data[++i],imgData.data[++i]).hsl();
         } else {
           d = [imgData.data[i],imgData.data[++i],imgData.data[++i]];
         }
@@ -84,6 +85,8 @@ function ColorGraph(options){
     }
   }
 
+  //@todo: rename function
+  //@todo: integrate getPoints and integrate hsl option
   this.organise = function(rawHisto, callback){
     var list = [];
     for(var propt in rawHisto){
@@ -184,51 +187,5 @@ function ColorGraph(options){
       vals[i] = vals[i] / plen;
     }
     return vals;
-  };
-
-  this.rgbToHsl = function(r, g, b){
-    r /= 255, g /= 255, b /= 255;
-    var max = Math.max(r, g, b), min = Math.min(r, g, b);
-    var h, s, l = (max + min) / 2;
-
-    if(max == min){
-      h = s = 0; // achromatic
-    }else{
-      var d = max - min;
-      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-      switch(max){
-        case r: h = (g - b) / d + (g < b ? 6 : 0); break;
-        case g: h = (b - r) / d + 2; break;
-        case b: h = (r - g) / d + 4; break;
-      }
-      h /= 6;
-    }
-
-    return [h, s, l];
-  };
-
-  this.hslToRgb = function(h, s, l){
-    var r, g, b;
-
-    if(s == 0){
-      r = g = b = l; // achromatic
-    }else{
-      function hue2rgb(p, q, t){
-        if(t < 0) t += 1;
-        if(t > 1) t -= 1;
-        if(t < 1/6) return p + (q - p) * 6 * t;
-        if(t < 1/2) return q;
-        if(t < 2/3) return p + (q - p) * (2/3 - t) * 6;
-        return p;
-      }
-
-      var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
-      var p = 2 * l - q;
-      r = hue2rgb(p, q, h + 1/3);
-      g = hue2rgb(p, q, h);
-      b = hue2rgb(p, q, h - 1/3);
-    }
-
-    return [r * 255, g * 255, b * 255].map(Math.round);
   };
 }

@@ -18,12 +18,19 @@ var d = ColorGraph({trim: 0, mode: 'rgb'});
 //  console.log(colorGraph);
 //});
 
+//var hslPoints = c.getPoints(canvas);
+//console.log(hslPoints);
+
 c.getDominantColors(canvas, function(results){
   console.log('HSL:');
-  console.log(results);
+  results.forEach(function(item){
+    console.log('rgb('+item[0]+','+item[1]+','+item[2]+')');
+  });
 });
 
 d.getDominantColors(canvas, function(results){
   console.log('RGB:');
-  console.log(results);
+  results.forEach(function(item){
+    console.log('rgb('+item[0]+','+item[1]+','+item[2]+')');
+  });
 });
