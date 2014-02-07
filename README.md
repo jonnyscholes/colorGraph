@@ -1,1 +1,6 @@
-Takes a canvas, returns array of objects that contain the rgb values and the occurrences of that color within the canvas.
+WIP.
+
+Node module that takes a canvas and performs various collection/statistical tasks on it.
+
+Examples will come soon. Until then see exampls.js
+
