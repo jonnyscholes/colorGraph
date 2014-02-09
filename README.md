@@ -7,7 +7,7 @@ I will include a browser version soon.
 
 #Example
 
-`
+```javascript
 var fs = require('fs')
   , ColorGraph = require('./index.js')
   , Canvas = require('canvas')
@@ -37,6 +37,6 @@ d.getDominantColors(canvas, function(results){
   console.log('RGB:');
   console.log(results);
 });
-`
+```
 
 If you have any issues or requests please make an issue and I'll do my best to include it.
