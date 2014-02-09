@@ -1,9 +1,16 @@
 {
   "name": "color-graph",
   "version": "0.0.1",
+  "author": "Jonny Scholes",
   "description": "Get color graph of canvas",
   "main": "index.js",
-  "repository": "",
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/jonnyscholes/colorGraph.git"
+  },
+  "bugs" : {
+    "url" : "https://github.com/jonnyscholes/colorGraph/issues"
+  },
   "dependencies": {
     "canvas": "*",
     "node-kmeans": "*"
