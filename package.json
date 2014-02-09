@@ -4,17 +4,25 @@
   "author": "Jonny Scholes",
   "description": "Get color graph of canvas",
   "main": "index.js",
-  "repository" : {
-    "type" : "git",
-    "url" : "https://github.com/jonnyscholes/colorGraph.git"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jonnyscholes/colorGraph.git"
   },
-  "bugs" : {
-    "url" : "https://github.com/jonnyscholes/colorGraph/issues"
+  "bugs": {
+    "url": "https://github.com/jonnyscholes/colorGraph/issues"
   },
   "dependencies": {
     "canvas": "*",
     "node-kmeans": "*"
   },
-  "author": "",
-  "license": "BSD"
+  "license": "BSD",
+  "readmeFilename": "README.md",
+  "gitHead": "b94150cf80fd9eb6af41d2c24b771e33442dfba6",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "color"
+  ]
 }
