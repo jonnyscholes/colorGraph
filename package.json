@@ -1,6 +1,6 @@
 {
   "name": "color-graph",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "Jonny Scholes",
   "description": "Get color graph of canvas",
   "main": "index.js",
