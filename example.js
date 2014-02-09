@@ -3,7 +3,7 @@ var fs = require('fs')
   , Canvas = require('canvas')
   , Image = Canvas.Image;
 
-var imgRaw = fs.readFileSync('./dark.jpg'),
+var imgRaw = fs.readFileSync('./lisa.jpg'),
   img = new Image;
   img.src = imgRaw;
 
@@ -11,26 +11,17 @@ var canvas = new Canvas(img.width, img.height),
   ctx = canvas.getContext('2d');
   ctx.drawImage(img, 0, 0);
 
-var c = ColorGraph({trim: 0, mode: 'hsl'});
-var d = ColorGraph({trim: 0, mode: 'rgb'});
+var d = ColorGraph({trim: 0});
 
-//c.getGraph(canvas, function(colorGraph){
-//  console.log(colorGraph);
-//});
 
-//var hslPoints = c.getPoints(canvas);
-//console.log(hslPoints);
+var points = d.getPoints(canvas);
+console.log(points);
 
-c.getDominantColors(canvas, function(results){
-  console.log('HSL:');
-  results.forEach(function(item){
-    console.log('rgb('+item[0]+','+item[1]+','+item[2]+')');
-  });
+d.getGraph(canvas, function(colorGraph){
+  console.log(colorGraph);
 });
 
 d.getDominantColors(canvas, function(results){
   console.log('RGB:');
-  results.forEach(function(item){
-    console.log('rgb('+item[0]+','+item[1]+','+item[2]+')');
-  });
+  console.log(results);
 });
