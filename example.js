@@ -14,8 +14,11 @@ var canvas = new Canvas(img.width, img.height),
 var d = ColorGraph({trim: 0});
 
 //Get all colors in an image - one color for each pixel
-var points = d.getPoints(canvas);
+var points = d.getPoints(canvas, false);
 console.log(points);
+
+var pointsAndCords = d.getPoints(canvas, true);
+console.log(pointsAndCords);
 
 //Get a list of all colors in a canvas along with their occurrence count
 d.getGraph(canvas, function(colorGraph){

@@ -1,13 +1,12 @@
 var Canvas = require('canvas')
   , kmeans = require('node-kmeans');
 
-"use strict";
+function ColorGraph(options) {
+  'use strict';
 
-module.exports = ColorGraph;
-
-function ColorGraph(options){
   if (!(this instanceof ColorGraph)) return new ColorGraph(options);
 
+  //@todo: Review how options are passed. Probably a better way of doing this.
   options = options || {trim: 0};
 
   this.getGraph = function(canvas, callback){
@@ -28,7 +27,7 @@ function ColorGraph(options){
           data[s]++;
         }
 
-        if(x == canvas.width-1 && y == canvas.height-1){
+        if(x === canvas.width-1 && y === canvas.height-1){
           this.organise(data, callback);
         }
       }
@@ -38,7 +37,7 @@ function ColorGraph(options){
   //@todo: implement feature to detect foreground/background based on number of points in a cluster being closest to middle of canvas
   //@todo: this should really be something more like getColorGroups
   this.getDominantColors = function(canvas, callback) {
-    var points = this.getPoints(canvas),
+    var points = this.getPoints(canvas, false),
       results = [];
 
     kmeans.clusterize(points, {k: 5}, function(err,clusters) {
@@ -55,13 +54,10 @@ function ColorGraph(options){
       });
 
       callback(results);
-
     });
+  };
 
-  }
-
-  //@todo: impliment cords feature to include the co-ordinates of each point in the returned array
-  this.getPoints = function(canvas){
+  this.getPoints = function(canvas, incCords){
     var points = [],
       ctx = canvas.getContext('2d'),
       imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
@@ -70,14 +66,18 @@ function ColorGraph(options){
       for (var x = 0; x < canvas.width; ++x) {
         var i = (y * canvas.width + x) * 4;
 
-        points.push([imgData.data[i],imgData.data[++i],imgData.data[++i]]);
+        if(incCords){
+          points.push({rgb: [imgData.data[i],imgData.data[++i],imgData.data[++i]], cords: {x: x, y: y}});
+        } else {
+          points.push([imgData.data[i],imgData.data[++i],imgData.data[++i]]);
+        }
 
-        if(x == canvas.width-1 && y == canvas.height-1){
+        if(x === canvas.width-1 && y === canvas.height-1){
           return points;
         }
       }
     }
-  }
+  };
 
   //@todo: rename function
   this.organise = function(rawHisto, callback){
@@ -100,3 +100,5 @@ function ColorGraph(options){
   };
 
 }
+
+module.exports = ColorGraph;
