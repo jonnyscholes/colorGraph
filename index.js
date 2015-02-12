@@ -80,6 +80,7 @@ function ColorGraph(options) {
   };
 
   //@todo: rename function
+  //@todo @performance: this could totally be done in getGraph somehow. Cummon jonny! Go, go, GO!
   this.organise = function(rawHisto, callback){
     var list = [];
     for(var propt in rawHisto){
